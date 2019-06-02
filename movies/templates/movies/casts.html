@@ -1,0 +1,52 @@
+{% extends 'movies/base.html' %}
+{% block title %}All Cast{% endblock %}
+{% block songs_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <div class="row">
+        <div class="col-sm-12">
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Cast Name</th>
+                                <th>Role</th>
+                                <th>Movie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cast in cast_list %}
+                                <tr>
+                                    <td>{{ cast.cast_name }}</td>
+                                    <td>{{ cast.movie }}</td>
+                                    <td>
+                                        <a href="{% url 'detail' cast.movie.id %}">
+                                            <img src="{{ cast.movie.movie_art.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
+                                        </a>
+                                        <a href="{% url 'detail' cast.movie.id %}">{{ cast.movie.movie_title }}</a>
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

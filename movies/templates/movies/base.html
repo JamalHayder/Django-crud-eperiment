@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'movies/main.css' %}"/>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="container-fluid" style="background-color:#F44336;color:#fff;height:200px;">
+  <h1>Movie & Trivia Record</h1>
+  <h3>Mohammed Jamal Hayder</h3>
+  <p>s287771</p>
+  <p>In this website You will be albe to keep record of movies along with its casts and trivias.</p>
+</div>
+
+<nav class="navbar navbar-inverse" data-spy="" data-offset-top="197">
+  <ul class="nav navbar-nav">
+    <li><a href="{% url 'movies:index' %}">Home</a></li>
+    <li><a href="{% url 'movies:add_movie' %}">Add a Movie</a></li>
+
+  </ul>
+</nav>
+
+<div class="container-fluid" style="height:1000px">
+  
+  {% block body %}
+  {% endblock %}
+</div>
+
+</body>
+</html>

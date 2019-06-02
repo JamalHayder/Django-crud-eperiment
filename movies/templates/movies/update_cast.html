@@ -1,0 +1,41 @@
+{% extends 'movies/base.html' %}
+{% block title %}Update Cast{% endblock %}
+{% block movies_active %}active{% endblock %}
+
+{% block body %}
+
+
+        <!-- Right Song Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation"><a href="{% url 'movies:detail' movie.id %}">View All</a></li>
+                <li role="presentation" class="active"><a href="{% url 'movies:add_cast' movie.id %}">Add Cast</a></li>
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Update Cast</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="movie" value="{{ movie }}">
+                        {% include 'movies/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

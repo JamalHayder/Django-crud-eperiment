@@ -1,0 +1,123 @@
+{% extends 'movies/base.html' %}
+{% block title %}{{ movie }}{% endblock %}
+{% block movies_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid casts-container">
+
+    <div class="row">
+
+        <!-- Left Movie Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{% url 'movies:detail' movie.id %}">
+                        {% if movie.movie_art %}
+                        <img src="{{ movie.movie_art.url }}" class="img-responsive">
+                        {% else %}
+                        <h3>No image to display</h3>
+                        {% endif %}
+                    </a>
+                    <h1>{{ movie.movie_title }} <small>{{ movie.genre }}</small></h1>
+                    <h2>{{ movie.director }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Cast Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active"><a href="{% url 'movies:detail' movie.id %}">View All</a></li>
+                <li role="presentation"><a href="{% url 'movies:add_cast' movie.id %}">Add Cast</a></li>
+                <li role="presentation"><a href="{% url 'movies:add_trivia' movie.id %}">Add Trivia</a></li>
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h3>All Casts</h3>
+
+                    {% if error_message %}
+                    <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cast in movie.cast_set.all %}
+                            <tr>
+                                <td>{{ cast.cast_name }}</td>
+                                <td>{{ cast.role}}</td>
+
+                                <td>
+                                    <form action="{% url 'movies:delete_cast' movie.id cast.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="movie_id" value="{{ movie.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Remove
+                                        </button>
+                                    </form>
+
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h3>Trivia</h3>
+
+                    {% if error_message %}
+                    <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Details</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for trivia in movie.trivia_set.all %}
+                            <tr>
+                                <td>{{ trivia.trivia_details }}</td>
+
+
+                                <td>
+                                    <form action="{% url 'movies:delete_trivia' movie.id trivia.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="trivia_id" value="{{ trivia.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Remove
+                                        </button>
+                                    </form>
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

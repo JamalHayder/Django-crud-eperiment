@@ -1,0 +1,60 @@
+{% extends 'movies/base.html' %}
+{% block title %}Add Trivia{% endblock %}
+{% block movies_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- Left Cast Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                        <a href="{% url 'movies:detail' movie.id %}">
+                            {% if movie.movie_art %}
+                                <img src="{{ movie.movie_art.url }}" class="img-responsive">
+                            {% else %}
+                                <h3>No image to display</h3>
+                            {% endif %}
+                        </a>
+                    <h1>{{ movie.movie_title }} <small>{{ movie.genre }}</small></h1>
+                    <h2>{{ movie.director }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Cast Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation"><a href="{% url 'movies:detail' movie.id %}">View All</a></li>
+                <li role="presentation" class="active"><a href="{% url 'movies:add_cast' movie.id %}">Add Trivia</a></li>
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Add Trivia</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="movie" value="{{ movie }}">
+                        {% include 'movies/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
